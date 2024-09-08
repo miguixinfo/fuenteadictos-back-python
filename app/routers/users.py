@@ -32,3 +32,15 @@ async def get_user_by_uuid(uuid: str, db: Session = Depends(get_db), auth = Depe
         )
     
     return user
+
+@router.delete("/{uuid}", response_model=UserResponse)
+async def retire_user(uuid: str, db: Session = Depends(get_db), auth = Depends(auth_user)):
+    user = user_repo.retire_user(db, uuid)
+    
+    if not user:
+        raise HTTPException(
+            status.HTTP_404_NOT_FOUND,
+            f"Usuario con uuid: '{uuid}' no encontrado"
+        )
+        
+    return user
