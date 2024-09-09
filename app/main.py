@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from models import user
+from models import user, fountain, review, warning
 from db.base import Base, engine
 from routers import users, auth
 
