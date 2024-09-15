@@ -2,7 +2,6 @@ import uuid
 from sqlalchemy import Column, DateTime, Boolean, Integer, String
 from sqlalchemy.sql import func
 from sqlalchemy.ext.declarative import as_declarative
-from sqlalchemy.dialects.postgresql import UUID as PostgresUUID
 from sqlalchemy.dialects.mysql import CHAR
 from db.base import Base
 
