@@ -10,7 +10,7 @@ router = APIRouter(prefix="/api/v1/fountains",
                    responses={404: {"message": "No encontrado"}})
 
 @router.get("", response_model=list[FountainResponse])
-async def get_all_fountains(skip: int = 0, limit: int = 10, db: Session = get_db(), auth = Depends(auth_user)):
+async def get_all_fountains(skip: int = 0, limit: int = 10, db: Session = Depends(get_db), auth = Depends(auth_user)): 
     fountains = fountain_repo.get_all_fountains(db, skip, limit)
     if len(fountains) == 0:
         raise HTTPException(
@@ -20,7 +20,7 @@ async def get_all_fountains(skip: int = 0, limit: int = 10, db: Session = get_db
     return fountains
 
 @router.get("/{uuid}", response_model=FountainResponse)
-async def get_fountain_by_uuid(uuid: str, db: Session = get_db(), auth = Depends(auth_user)):
+async def get_fountain_by_uuid(uuid: str, db: Session = Depends(get_db), auth = Depends(auth_user)):
     fountain = fountain_repo.get_fountain_by_uuid(db, uuid)
     if not fountain:
         raise HTTPException(
@@ -30,7 +30,7 @@ async def get_fountain_by_uuid(uuid: str, db: Session = get_db(), auth = Depends
     return fountain
 
 @router.get("/name/{name}", response_model=FountainResponse)
-async def get_fountain_by_name(name: str, db: Session = get_db(), auth = Depends(auth_user)):
+async def get_fountain_by_name(name: str, db: Session = Depends(get_db), auth = Depends(auth_user)):
     fountain = fountain_repo.get_fountain_by_name(db, name)
     if not fountain:
         raise HTTPException(
@@ -40,5 +40,5 @@ async def get_fountain_by_name(name: str, db: Session = get_db(), auth = Depends
     return fountain
 
 @router.post("", response_model=FountainResponse)
-async def create_fountain(fountain: FountainCreate, db: Session = get_db(), auth = Depends(auth_user)):
-    return fountain_repo.create_fountain(db, fountain)
+async def create_fountain(fountain: FountainCreate, db: Session = Depends(get_db), auth = Depends(auth_user)):
+    return fountain_repo.create_fountain(db, fountain) 

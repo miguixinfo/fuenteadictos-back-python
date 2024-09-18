@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
+from typing import Optional, Dict, Any
 
 class FountainResponse(BaseModel):
     uuid: str
@@ -7,12 +8,13 @@ class FountainResponse(BaseModel):
     description: str
     created_date: datetime
     operative: bool
-    average_points: int
+    average_points: Optional[int]
     latitude: float
     longitude: float
     
     class Config:
         orm_mode = True
+        
         
 class FountainCreate(BaseModel):
     name: str

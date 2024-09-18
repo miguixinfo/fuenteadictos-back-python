@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from models.fountain import Fountain
-from schemas.user import FountainCreate
+from schemas.fountain import FountainCreate
 
 def get_fountain_by_uuid(db: Session, uuid: str) -> Fountain:
     return db.query(Fountain).filter(Fountain.uuid == uuid).first()

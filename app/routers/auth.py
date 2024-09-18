@@ -67,3 +67,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
                                      password=hashed_password,
                                  )
     return user_repo.create_user(db, new_user)
+
+@router.get("/me", response_model=UserResponse)
+def read_users_me(current_user: UserResponse = Depends(auth_user)):
+    return current_user
