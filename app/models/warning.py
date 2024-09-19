@@ -7,8 +7,8 @@ class Warning(BaseObject):
     
     operative = Column(Boolean, nullable=False)
     
-    user_id = Column(Integer, ForeignKey("user.id"))
-    fountain_id = Column(Integer, ForeignKey("fountain.id"))
+    user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+    fountain_id = Column(Integer, ForeignKey("fountain.id"), nullable=False)
     
     user = relationship("User", back_populates="warnings")
     fountain = relationship("Fountain", back_populates="warnings")
