@@ -30,7 +30,7 @@ async def get_warning_by_uuid(uuid: str, db: Session = Depends(get_db), auth = D
             e.message
         )
 
-@router.get("/fountain/{uuid}", response_model=WarningResponse)
+@router.get("/fountain/{uuid}", response_model=list[WarningResponse])
 async def get_warnings_by_fountain_uuid(uuid: str, db: Session = Depends(get_db), auth = Depends(auth_user)):
     try:
         return warning_service.get_warnings_by_fountain_uuid(db, uuid)
@@ -40,7 +40,7 @@ async def get_warnings_by_fountain_uuid(uuid: str, db: Session = Depends(get_db)
             e.message
         )
 
-@router.get("/user/{uuid}", response_model=WarningResponse)
+@router.get("/user/{uuid}", response_model=list[WarningResponse])
 async def get_warnings_by_user_uuid(uuid: str, db: Session = Depends(get_db), auth = Depends(auth_user)):
     try:
         return warning_service.get_warnings_by_user_uuid(db, uuid)
