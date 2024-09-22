@@ -13,6 +13,11 @@ class UserResponse(BaseModel):
     class Config:
         orm_mode = True
         
+class UserSmallResponse(BaseModel):
+    uuid: str
+    email: str
+    username: str
+        
         
 class UserCreate(BaseModel):
     email: EmailStr = Field(..., description="El email del usuario")

@@ -35,3 +35,18 @@ class WarningNotFoundError(CustomException):
             self.message += f": '{param}'"
         super().__init__(self.message)
     
+class ReviewNotFoundError(CustomException):
+    """Raised when an attempt to find a review that does not exist is made"""
+    def __init__(self, message="No se encontró la reseña", param=None):
+        self.message = message
+        self.param = param
+        if param:
+            self.message += f": '{param}'"
+        super().__init__(self.message)
+        
+class ReviewAlreadyExistError(CustomException):
+    """Raised when an attempt to create a review that already exists is made"""
+    def __init__(self, message="La reseña ya existe"):
+        self.message = message
+        super().__init__(self.message)
+        

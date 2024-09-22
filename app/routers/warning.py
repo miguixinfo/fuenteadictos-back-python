@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, HTTPException, Depends
 from sqlalchemy.orm import Session
-from repositories import warning as warning_repo
+from services import warning as warning_service
 from schemas.warning import WarningCreate, WarningResponse
 from db.base import get_db
 from routers.auth import auth_user
@@ -13,7 +13,7 @@ router = APIRouter(prefix="/api/v1/warnings",
 @router.get("", response_model=list[WarningResponse])
 async def get_all_warnings(skip: int = 0, limit: int = 10, db: Session = Depends(get_db), auth = Depends(auth_user)):
     try:
-        return warning_repo.get_all_warnings(db, skip, limit)
+        return warning_service.get_all_warnings(db, skip, limit)
     except WarningNotFoundError as e:
         raise HTTPException(
             status.HTTP_404_NOT_FOUND,
@@ -23,7 +23,7 @@ async def get_all_warnings(skip: int = 0, limit: int = 10, db: Session = Depends
 @router.get("/{uuid}", response_model=WarningResponse)
 async def get_warning_by_uuid(uuid: str, db: Session = Depends(get_db), auth = Depends(auth_user)):
     try:
-        return warning_repo.get_warning_by_uuid(db, uuid)
+        return warning_service.get_warning_by_uuid(db, uuid)
     except WarningNotFoundError as e:
         raise HTTPException(
             status.HTTP_404_NOT_FOUND,
@@ -33,7 +33,7 @@ async def get_warning_by_uuid(uuid: str, db: Session = Depends(get_db), auth = D
 @router.get("/fountain/{uuid}", response_model=WarningResponse)
 async def get_warnings_by_fountain_uuid(uuid: str, db: Session = Depends(get_db), auth = Depends(auth_user)):
     try:
-        return warning_repo.get_warnings_by_fountain_uuid(db, uuid)
+        return warning_service.get_warnings_by_fountain_uuid(db, uuid)
     except WarningNotFoundError as e:
         raise HTTPException(
             status.HTTP_404_NOT_FOUND,
@@ -43,7 +43,7 @@ async def get_warnings_by_fountain_uuid(uuid: str, db: Session = Depends(get_db)
 @router.get("/user/{uuid}", response_model=WarningResponse)
 async def get_warnings_by_user_uuid(uuid: str, db: Session = Depends(get_db), auth = Depends(auth_user)):
     try:
-        return warning_repo.get_warnings_by_user_uuid(db, uuid)
+        return warning_service.get_warnings_by_user_uuid(db, uuid)
     except WarningNotFoundError as e:
         raise HTTPException(
             status.HTTP_404_NOT_FOUND,
@@ -53,7 +53,7 @@ async def get_warnings_by_user_uuid(uuid: str, db: Session = Depends(get_db), au
 @router.post("", response_model=WarningResponse)
 async def create_warning(warning: WarningCreate, db: Session = Depends(get_db), auth = Depends(auth_user)):
     try:
-        return warning_repo.create_warning(db, warning)
+        return warning_service.create_warning(db, warning)
     except UserNotFoundError as e:
         raise HTTPException(
             status.HTTP_400_BAD_REQUEST,

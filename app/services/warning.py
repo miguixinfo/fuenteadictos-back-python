@@ -1,6 +1,9 @@
 from repositories import warning as warning_repo
+from repositories import user as user_repo
+from repositories import fountain as fountain_repo
 from schemas.warning import WarningCreate
 from errors.errors import WarningNotFoundError, UserNotFoundError, FountainNotFoundError
+from models.warning import Warning
 
 def get_all_warnings(db, skip: int = 0, limit: int = 0):
     warnings = warning_repo.get_all_warnings(db, skip, limit)
@@ -27,14 +30,13 @@ def get_warnings_by_user_uuid(db, uuid: str):
     return warnings
 
 def create_warning(db, warning: WarningCreate):
-    user = warning_repo.get_user_by_uuid(db, warning.user_uuid)
+    user = user_repo.get_user_by_uuid(db, warning.user_uuid)
     if not user:
         raise UserNotFoundError(param=warning.user_uuid)
-    fountain = warning_repo.get_fountain_by_uuid(db, warning.fountain_uuid)
+    fountain = fountain_repo.get_fountain_by_uuid(db, warning.fountain_uuid)
     if not fountain:
         raise FountainNotFoundError(param=warning.fountain_uuid)
-    
-    new_warning = Warning(warning.operative, user, fountain)
+    new_warning = Warning(operative=warning.operative, user_id=user.id, fountain_id=fountain.id)
     return warning_repo.create_warning(db, new_warning)
         
 def retire_warning(db, uuid: str):

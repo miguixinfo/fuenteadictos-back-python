@@ -5,15 +5,15 @@ from models.base_object import BaseObject
 class Review(BaseObject):
     __tablename__='review'
     
-    header = Column(String(255))
-    description = Column(String(500))
-    jet_points = Column(Integer)
-    cold_points = Column(Integer)
-    pretty_points = Column(Integer)
-    flavor_points = Column(Integer)
+    header = Column(String(255)) # Título de la reseña
+    description = Column(String(500)) # Descripción de la reseña
+    jet_points = Column(Integer) # Puntos de chorro
+    cold_points = Column(Integer) # Puntos de frio
+    pretty_points = Column(Integer) # Puntos de belleza
+    flavor_points = Column(Integer) # Puntos de sabor
     
-    user_id = Column(Integer, ForeignKey("user.id"))
-    fountain_id = Column(Integer, ForeignKey("fountain.id"))
+    user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+    fountain_id = Column(Integer, ForeignKey("fountain.id"), nullable=False)
     
     user = relationship("User", back_populates="reviews")
     fountain = relationship("Fountain", back_populates="reviews")

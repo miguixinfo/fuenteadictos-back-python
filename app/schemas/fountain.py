@@ -16,6 +16,12 @@ class FountainResponse(BaseModel):
     class Config:
         orm_mode = True
         
+class FountainSmallResponse(BaseModel):
+    uuid: str
+    name: str
+    
+    class Config:
+        orm_mode = True
         
 class FountainCreate(BaseModel):
     name: str = Field(..., min_length=1, max_length=20, description="El nombre de la fuente")
