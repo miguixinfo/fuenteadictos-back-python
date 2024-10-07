@@ -11,4 +11,3 @@ class Settings:
     DEBUG: bool = os.getenv("DEBUG", "False") == "True"
  
 settings = Settings()
-print(f"DATABASE_URL loaded: {settings.DATABASE_URL}") 

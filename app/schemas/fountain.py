@@ -3,6 +3,8 @@ from datetime import datetime
 from typing import Optional
 import re
 
+# TODO añadir al modelo de respuesta el calculo de puntos medios
+
 class FountainResponse(BaseModel):
     uuid: str
     name: str
