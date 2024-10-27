@@ -35,15 +35,10 @@ async def auth_user(token: str = Depends(oauth2), db: Session = Depends(get_db))
 @router.post("/login")
 async def login(form: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user_db = user_repo.get_user_by_username(db, form.username)
-    if not user_db:
+    if not user_db or not encrypt.verify_password(form.password, user_db.password):
         raise HTTPException(
-            status.HTTP_400_BAD_REQUEST, "El usuario no es correcto"
+            status.HTTP_400_BAD_REQUEST, "El usuario o la contraseña son incorrectos"
         )
-        
-    if not encrypt.verify_password(form.password, user_db.password):
-        raise HTTPException(
-            status.HTTP_400_BAD_REQUEST, "La contraseña no es correcta"
-        ) 
         
     access_token = {
         "sub": user_db.username,
