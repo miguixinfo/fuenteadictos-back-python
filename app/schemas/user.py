@@ -40,7 +40,5 @@ class UserCreate(BaseModel):
             raise ValueError('La contraseña debe contener al menos una letra minúscula')
         if not re.search(r'[0-9]', value):
             raise ValueError('La contraseña debe contener al menos un dígito')
-        if not re.search(r'[!@#$%^&*(),.?":{}|<>]', value):
-            raise ValueError('La contraseña debe contener al menos un carácter especial')
         return value
     
